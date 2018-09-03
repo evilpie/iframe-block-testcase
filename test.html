@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test iframe blocking</title>
+</head>
+<body>
+
+<ul>
+</ul>
+
+<script>
+var ul = document.querySelector("ul");
+
+function li(str) {
+    var li = document.createElement("li")
+    li.textContent = str;
+    ul.append(li);
+}
+
+
+for (const url of ["http://example.org", "http://invalid.invalid"]) {
+    var iframe = document.createElement("iframe");
+    iframe.addEventListener("load", function() {
+        li(`Load event for ${url}\n`);
+    });
+    iframe.addEventListener("error", function() {
+        li(`Error event for ${url}\n`);
+    })
+
+    li(`Loading ${url}\n`);
+
+    iframe.src = url;
+    document.body.append(iframe);
+}
+</script>
+
+</body>
+</html>
